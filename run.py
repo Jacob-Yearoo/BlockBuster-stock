@@ -17,17 +17,38 @@ def get_user_input():
     """
     
     """
-    # while True:
-    print("Please choose what you would like to do\n")
-    print("1:Check in-store stock\n")
-    print("2:Add or remove in-store stock\n")
-    print("3:Check In-store stock\n")
+    while True:
+        print("Please choose what you would like to do\n")
+        print("1:Check in-store stock\n")
+        print("2:Add or remove in-store stock\n")
+        print("3:Check In-store stock\n")
 
-    choice_input = input("Please enter the corresponding number.\n")
+        choice_input = input("Please enter the corresponding number.\n")
 
-    choice = int(choice_input)
+        choice = int(choice_input)
+        validate_input(choice)
 
+        if validate_input(choice):
+            print("Input received...")
+            break
+        
     print(f"You chose option {choice}")
+
+
+def validate_input(data):
+    """
+    
+    """
+    try:
+        if data != 1:
+            raise ValueError(
+                f"Incorrect option, please choose 1, 2, or 3. you selected {data}"
+            )
+    except ValueError as e:
+        print("Please try again.\n")
+        return False
+
+    return True
 
 
 get_user_input()
