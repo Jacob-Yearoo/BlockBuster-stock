@@ -36,11 +36,11 @@ def get_user_input():
     if choice == "1":
         check_stock()
     
-    # if choice == "2":
-    #     check_stock()
+    if choice == "2":
+        add_units()
     
-    # if choice == "3":
-    #     check_stock()
+    if choice == "3":
+        total_stock()
 
     return choice
 
@@ -90,6 +90,8 @@ def add_units():
         if validate_stock(stock_data):
             print("Data is valid!")
             break
+    pprint(f"You inputted {stock_data}")
+    update_stock_sheet("Stock", stock_data)
 
 
 def validate_stock(data):
@@ -97,7 +99,7 @@ def validate_stock(data):
     
     """
     try:
-        [int(data) for ind in data]
+        [int(x) for x in data]
         if len(data) != 6:
             raise ValueError(
                 f"Whoops looks like you missed some. you provided {len(data)}"
@@ -107,3 +109,39 @@ def validate_stock(data):
         return False
 
     return True
+
+
+def update_stock_sheet(worksheet, data):
+    """
+    
+    """
+    print(f"Updating {worksheet} sheet...\n")
+    worksheet_to_update = SHEET.worksheet(worksheet)
+    worksheet_to_update.append_row(data)
+    print(f"{worksheet} updated successfully...\n")
+
+    get_user_input()
+
+
+def total_stock():
+    """
+    
+    """
+    print("Working out totals...\n")
+    stock = SHEET.worksheet("Stock").get_all_values()[-1]
+    rent = SHEET.worksheet("Rented").get_all_values()[-1]
+
+    total_data = []
+    for stock, rent in zip(stock, rent):
+        totals = stock + rent
+        total_data.append(totals)
+        
+    update_stock_sheet("Total", total_data)
+
+    return total_data
+
+
+get_user_input()
+
+
+
