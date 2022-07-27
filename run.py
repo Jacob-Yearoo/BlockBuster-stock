@@ -21,7 +21,7 @@ def get_user_input():
     while True:
         print("Please choose what you would like to do\n")
         print("1:Check in-store stock\n")
-        print("2:Add or remove in-store stock\n")
+        print("2:Add this weeks in-store stock\n")
         print("3:Check total stock\n")
 
         choice_input = input("Please enter the corresponding number.\n")
@@ -41,7 +41,6 @@ def get_user_input():
     
     # if choice == "3":
     #     check_stock()
-
 
     return choice
 
@@ -74,4 +73,37 @@ def check_stock():
     get_user_input()
 
 
-get_user_input()
+def add_units():
+    """
+    
+    """
+    while True:
+        print("please enter stock for this weeks blockbusters")
+        print("Data should be six numbers")
+        print("Example: 10,20,30,40,50,60\n")
+
+        new_str = input("Enter your data here:\n")
+
+        stock_data = new_str.split(",")
+        validate_stock(stock_data)
+
+        if validate_stock(stock_data):
+            print("Data is valid!")
+            break
+
+
+def validate_stock(data):
+    """
+    
+    """
+    try:
+        [int(data) for ind in data]
+        if len(data) != 6:
+            raise ValueError(
+                f"Whoops looks like you missed some. you provided {len(data)}"
+            )
+    except ValueError as e:
+        print(f"Invalid input: {e}, please try again.\n")
+        return False
+
+    return True
