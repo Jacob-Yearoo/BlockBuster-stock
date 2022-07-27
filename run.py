@@ -1,5 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
+from pprint import pprint
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -21,18 +22,28 @@ def get_user_input():
         print("Please choose what you would like to do\n")
         print("1:Check in-store stock\n")
         print("2:Add or remove in-store stock\n")
-        print("3:Check In-store stock\n")
+        print("3:Check total stock\n")
 
         choice_input = input("Please enter the corresponding number.\n")
 
-        choice = int(choice_input)
+        choice = choice_input
         validate_input(choice)
 
         if validate_input(choice):
-            print("Input received...")
+            print("Input received...\n")
             break
         
-    print(f"You chose option {choice}")
+    if choice == "1":
+        check_stock()
+    
+    # if choice == "2":
+    #     check_stock()
+    
+    # if choice == "3":
+    #     check_stock()
+
+
+    return choice
 
 
 def validate_input(data):
@@ -40,15 +51,27 @@ def validate_input(data):
     
     """
     try:
-        if data != 1:
+        int(data)
+        while data not in ["1", "2", "3"]:
             raise ValueError(
-                f"Incorrect option, please choose 1, 2, or 3. you selected {data}"
+                f"Incorrect option. you selected {data}"
             )
     except ValueError as e:
-        print("Please try again.\n")
+        print(f"Invalid input: {e}, please try again.\n")
         return False
 
     return True
+
+
+def check_stock():
+    """
+    
+    """
+    print("Getting in-store stock data...\n")
+    stock = SHEET.worksheet("Stock").get_all_values()
+    pprint(stock)
+
+    get_user_input()
 
 
 get_user_input()
