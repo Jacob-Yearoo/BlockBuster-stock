@@ -22,8 +22,8 @@ def get_user_input():
     """
     while True:
         print("Please choose what you would like to do\n")
-        print("1:Check in-store stock\n")
-        print("2:Add this weeks in-store stock\n")
+        print("1:Check in-store and rented stock\n")
+        print("2:Add this weeks in-store and rented stock\n")
         print("3:Check total stock\n")
 
         choice_input = input("Please enter the corresponding number.\n")
@@ -73,6 +73,11 @@ def check_stock():
     print(tabulate(
         stock, headers='keys', tablefmt='pretty', showindex="never"))
 
+    print("Getting rented stock data...\n")
+    rt = pd.DataFrame(SHEET.worksheet("Rented").get_all_records())
+    print(tabulate(
+        rt, headers='keys', tablefmt='pretty', showindex="never"))
+
     get_user_input()
 
 
@@ -95,6 +100,28 @@ def add_units():
             break
     pprint(f"You inputted {stock_data}")
     update_stock_sheet("Stock", stock_data)
+
+    add_rent()
+
+
+def add_rent():
+    while True:
+        print("Now enter the units that are currently rented out")
+        print("Data should be six numbers")
+        print("Example: 10,20,30,40,50,60\n")
+
+        rent_str = input("Enter your data here:\n")
+
+        rent_data = rent_str.split(",")
+        validate_stock(rent_data)
+
+        if validate_stock(rent_data):
+            print("Data is valid!")
+            break
+    pprint(f"You inputted {rent_data}")
+    update_stock_sheet("Rented", rent_data)
+
+    get_user_input()
 
 
 def validate_stock(data):
@@ -128,7 +155,7 @@ def update_stock_sheet(worksheet, data):
         print(tabulate(
             total_sheet, headers='keys', tablefmt='pretty', showindex="never"))
 
-    get_user_input()
+    # get_user_input()
 
 
 def total_stock():
