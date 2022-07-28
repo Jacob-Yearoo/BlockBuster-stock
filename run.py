@@ -1,3 +1,6 @@
+"""
+External Libraries
+"""
 from pprint import pprint  # Used to make some print statements easier to read
 import gspread  # Needed to open and edit spreadsheet
 import pandas as pd  # Used as a way to make the sheet more comprehensible
