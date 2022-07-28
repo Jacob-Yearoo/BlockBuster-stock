@@ -1,4 +1,6 @@
 import gspread
+import pandas as pd
+from tabulate import tabulate
 from google.oauth2.service_account import Credentials
 from pprint import pprint
 
@@ -67,8 +69,9 @@ def check_stock():
     
     """
     print("Getting in-store stock data...\n")
-    stock = SHEET.worksheet("Stock").get_all_values()
-    pprint(stock)
+    stock = pd.DataFrame(SHEET.worksheet("Stock").get_all_records())
+    print(tabulate(
+        stock, headers='keys', tablefmt='pretty', showindex="never"))
 
     get_user_input()
 
@@ -120,6 +123,11 @@ def update_stock_sheet(worksheet, data):
     worksheet_to_update.append_row(data)
     print(f"{worksheet} updated successfully...\n")
 
+    if worksheet == "Total":
+        total_sheet = pd.DataFrame(SHEET.worksheet("Total").get_all_records())
+        print(tabulate(
+            total_sheet, headers='keys', tablefmt='pretty', showindex="never"))
+
     get_user_input()
 
 
@@ -133,7 +141,7 @@ def total_stock():
 
     total_data = []
     for stock, rent in zip(stock, rent):
-        totals = stock + rent
+        totals = int(stock) + int(rent)
         total_data.append(totals)
         
     update_stock_sheet("Total", total_data)
@@ -142,6 +150,4 @@ def total_stock():
 
 
 get_user_input()
-
-
 
