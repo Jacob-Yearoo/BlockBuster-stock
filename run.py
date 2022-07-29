@@ -65,7 +65,7 @@ def validate_input(data):
     Param:
     takes a data parameter that comes from a variable which
     contains the users input
-    returns true if the data is 1,2 or 3 anything else and it returns false.
+    returns true if the data is 1,2,3 or 4 anything else and it returns false.
     """
     if data not in {"1", "2", "3", "4"}:
         print(f"Incorrect option. you selected {data}")
@@ -76,9 +76,9 @@ def validate_input(data):
 
 def check_stock():
     """
-    this function opens the google sheet and through panda
-     formats the table neatly in the terminal
-     then returns the user to the main function.
+    This function opens the google sheet and through panda
+    formats the table neatly in the terminal
+    then returns the user to the main function.
     """
     # the below method of taking the sheet and printing it
     # in a clearer way was used in RickofManc's project
@@ -96,7 +96,7 @@ def check_stock():
 
 def add_units(worksheet, message):
     """
-    this function is very similair to the get user unput()
+    This function is very similair to the get user unput()
     it collects the user input and then enters that
     data into the spreadsheet.
     param:
@@ -138,7 +138,7 @@ def add_units(worksheet, message):
 
 def update_stock_sheet(worksheet, data):
     """
-    this function opens the selected worksheet and
+    This function opens the selected worksheet and
     appends a new row to the bottom of the sheet
     with data given from another function.
     param:
@@ -159,7 +159,7 @@ def update_stock_sheet(worksheet, data):
 
 def total_stock():
     """
-    this function calculates the total stock by
+    This function calculates the total stock by
     gointo the "Stock" and "Rented" sheets and getting the last row from each,
     it then creates an empty list and goes through each item
     from both sheets, adds them together and puts them in the empty list
@@ -181,7 +181,7 @@ def total_stock():
 
 def main():
     """
-    main funtion used to start the program.
+    Main funtion used to start the program.
     """
     get_user_input()
 
